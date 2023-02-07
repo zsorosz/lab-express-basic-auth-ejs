@@ -32,6 +32,30 @@ router.get("/auth/login", (req, res, next) => {
   res.render("auth/login");
 });
 
+router.post('/auth/login', async (req, res) => {
+  console.log('SESSION =====> ', req.session)
+  const body = req.body
+
+  const userMatch = await User.find({ username: body.username })
+  console.log(userMatch)
+  if (userMatch.length) {
+    // User found
+    const user = userMatch[0]
+
+    if (bcrypt.compareSync(body.password, user.passwordHash)) {
+      // Correct password
+      console.log(user)
+      res.render('profile', { user })
+    } else {
+      // Incorrect password
+      console.log('incorrect password')
+    }
+  } else {
+    // User not found
+    
+  }
+})
+
 module.exports = router;
 
 
