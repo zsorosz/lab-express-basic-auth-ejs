@@ -4,7 +4,7 @@ const User = require("../models/User.model");
 const bcrypt = require('bcryptjs')
 
 
-/* GET home page */
+/* GET signup page */
 router.get("/auth/signup", (req, res, next) => {
   res.render("auth/signup");
 });
@@ -22,11 +22,17 @@ delete body.password
 body.passwordHash = passwordHash
 
 
-
-
     await User.create(body)
-    res.send(body);
+    res.redirect('/auth/login');
   });
+
+
+  /* GET login page */
+router.get("/auth/login", (req, res, next) => {
+  res.render("auth/login");
+});
+
+module.exports = router;
 
 
 
