@@ -5,10 +5,10 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
-/* GET  profilepage */
-router.get("/", (req, res, next) => {
+/* GET  profile page */
+router.get("/profile", (req, res, next) => {
 
-  res.render("profile");
+  res.render("profile", {user:req.session.user});
 });
 
 

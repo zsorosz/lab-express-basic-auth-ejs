@@ -37,15 +37,21 @@ router.post('/auth/login', async (req, res) => {
   const body = req.body
 
   const userMatch = await User.find({ username: body.username })
-  console.log(userMatch)
+  // console.log(userMatch)
   if (userMatch.length) {
     // User found
     const user = userMatch[0]
 
     if (bcrypt.compareSync(body.password, user.passwordHash)) {
       // Correct password
-      console.log(user)
-      res.render('profile', { user })
+      // console.log(user)
+      console.log(userMatch)
+      const tempUser ={
+        username: user.username
+      }
+     req.session.user = tempUser
+
+      res.redirect('/profile')
     } else {
       // Incorrect password
       console.log('incorrect password')
